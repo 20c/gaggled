@@ -43,6 +43,13 @@ You may be clever enough to just use **gaggled** right after building, but you'r
 * Boost 1.42.0 or later
 * ZeroMQ 2.1 with C++ support. 2.0 does not work, but will build.
 
+## Ubuntu 13.10
+
+    sudo apt-get install g++-4.4 cmake libzmq-dev libboost1.49-all-dev
+    mkdir build && cd build
+    cmake -D CMAKE_CXX_COMPILER=`which g++-4.4` ..
+    make -j4
+
 # Concepts / Configuration
 
 ## Global Settings
