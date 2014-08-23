@@ -270,6 +270,7 @@ void gaggled::Program::start(Gaggled* g) {
       exit(EX_UNAVAILABLE);
     }
   } else if (pid == -1) {
+    // should handle this better. This isn't right. Check errno at least... we might need to send something out message wise on ZMQ bus..
     std::cout << "fork failed." << std::endl;
   } else {
     controlled_shutdown = false; // We're not in a controlled shutdown right now.  We just started, so that can't be true.
