@@ -24,7 +24,8 @@ You may be clever enough to just use **gaggled** right after building, but you'r
 ## Known to Work
 
 * Centos 5
-* Scientific Linux 6
+* Centos 6 / ZeroMQ 2.2
+* Centos 7 / ZeroMQ 3.2.4
 * Debian Sid (9/29/2011) or Debian Squeeze with backported ZeroMQ 2.1 packages from Sid.
 
 ## Might Work, Untested
@@ -49,6 +50,15 @@ You may be clever enough to just use **gaggled** right after building, but you'r
     mkdir build && cd build
     cmake -D CMAKE_CXX_COMPILER=`which g++-4.4` ..
     make -j4
+
+## Centos 5/6/7
+
+    yum install boost-devel zeromq3-devel
+
+New ZeroMQ libraries do not ship with zmq.hpp, simply grab it and put it in 'src'
+
+    wget https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
+
 
 # Concepts / Configuration
 

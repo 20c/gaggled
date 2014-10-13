@@ -7,27 +7,28 @@
 
 **<a href="#toc1-22">Platforms</a>**
 &emsp;<a href="#toc2-27">Known to Work</a>
-&emsp;<a href="#toc2-34">Might Work, Untested</a>
-&emsp;<a href="#toc2-40">Not Expected to Work</a>
+&emsp;<a href="#toc2-35">Might Work, Untested</a>
+&emsp;<a href="#toc2-41">Not Expected to Work</a>
 
-**<a href="#toc1-45">Dependencies</a>**
-&emsp;<a href="#toc2-53">Ubuntu 13.10</a>
+**<a href="#toc1-46">Dependencies</a>**
+&emsp;<a href="#toc2-54">Ubuntu 13.10</a>
+&emsp;<a href="#toc2-62">Centos 5/6/7</a>
 
-**<a href="#toc1-61">Concepts / Configuration</a>**
-&emsp;<a href="#toc2-64">Global Settings</a>
-&emsp;<a href="#toc2-89">Dependency Rules: Disallowed Configurations</a>
+**<a href="#toc1-72">Concepts / Configuration</a>**
+&emsp;<a href="#toc2-75">Global Settings</a>
+&emsp;<a href="#toc2-100">Dependency Rules: Disallowed Configurations</a>
 
-**<a href="#toc1-98">Internals</a>**
-&emsp;<a href="#toc2-101">Stopping Programs</a>
+**<a href="#toc1-109">Internals</a>**
+&emsp;<a href="#toc2-112">Stopping Programs</a>
 
-**<a href="#toc1-106">Usage</a>**
+**<a href="#toc1-117">Usage</a>**
 
-**<a href="#toc1-113">Listener, Controller, and SMTP Gate</a>**
-&emsp;<a href="#toc2-118">Listener</a>
-&emsp;<a href="#toc2-123">Controller</a>
-&emsp;<a href="#toc2-128">SMTP Gate</a>
+**<a href="#toc1-124">Listener, Controller, and SMTP Gate</a>**
+&emsp;<a href="#toc2-129">Listener</a>
+&emsp;<a href="#toc2-134">Controller</a>
+&emsp;<a href="#toc2-139">SMTP Gate</a>
 
-**<a href="#toc1-135">Caveats</a>**
+**<a href="#toc1-146">Caveats</a>**
 
 <A name="toc1-2" title="TODO" />
 # TODO
@@ -58,21 +59,22 @@ You may be clever enough to just use **gaggled** right after building, but you'r
 ## Known to Work
 
 * Centos 5
-* Scientific Linux 6
+* Centos 6 / ZeroMQ 2.2
+* Centos 7 / ZeroMQ 3.2.4
 * Debian Sid (9/29/2011) or Debian Squeeze with backported ZeroMQ 2.1 packages from Sid.
 
-<A name="toc2-34" title="Might Work, Untested" />
+<A name="toc2-35" title="Might Work, Untested" />
 ## Might Work, Untested
 
 * FreeBSD
 * OSX
 
-<A name="toc2-40" title="Not Expected to Work" />
+<A name="toc2-41" title="Not Expected to Work" />
 ## Not Expected to Work
 
 * Any Windows systems (although this may work under Cygwin)
 
-<A name="toc1-45" title="Dependencies" />
+<A name="toc1-46" title="Dependencies" />
 # Dependencies
 
 * CMake 2.6 or later
@@ -80,7 +82,7 @@ You may be clever enough to just use **gaggled** right after building, but you'r
 * Boost 1.42.0 or later
 * ZeroMQ 2.1 with C++ support. 2.0 does not work, but will build.
 
-<A name="toc2-53" title="Ubuntu 13.10" />
+<A name="toc2-54" title="Ubuntu 13.10" />
 ## Ubuntu 13.10
 
     sudo apt-get install g++-4.4 cmake libzmq-dev libboost1.49-all-dev
@@ -88,10 +90,20 @@ You may be clever enough to just use **gaggled** right after building, but you'r
     cmake -D CMAKE_CXX_COMPILER=`which g++-4.4` ..
     make -j4
 
-<A name="toc1-61" title="Concepts / Configuration" />
+<A name="toc2-62" title="Centos 5/6/7" />
+## Centos 5/6/7
+
+    yum install boost-devel zeromq3-devel
+
+New ZeroMQ libraries do not ship with zmq.hpp, simply grab it and put it in 'src'
+
+    wget https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
+
+
+<A name="toc1-72" title="Concepts / Configuration" />
 # Concepts / Configuration
 
-<A name="toc2-64" title="Global Settings" />
+<A name="toc2-75" title="Global Settings" />
 ## Global Settings
 
 * The section labelled `gaggled` contains several settings, all of which are optional.  The section itself is optional.
@@ -116,7 +128,7 @@ You may be clever enough to just use **gaggled** right after building, but you'r
 
 Some examples of **gaggled** config files are in the contrib/ directory.
 
-<A name="toc2-89" title="Dependency Rules: Disallowed Configurations" />
+<A name="toc2-100" title="Dependency Rules: Disallowed Configurations" />
 ## Dependency Rules: Disallowed Configurations
 
 There are some dependency configurations that are valid syntax, you may not express in the configuration of **gaggled**.  Doing so will result in **gaggled** failing to run or configest.
@@ -125,44 +137,44 @@ There are some dependency configurations that are valid syntax, you may not expr
 * missing any required setting
 * circular dependencies: there can be no cycles in the dependency graph.  The graph is directed (`of` -> `on`), so it's possible to have a dependency set like (a -> b), (b -> c), (a -> c) which is not considered a cycle.  If you have one, then the programs in it would never start.
 
-<A name="toc1-98" title="Internals" />
+<A name="toc1-109" title="Internals" />
 # Internals
 
-<A name="toc2-101" title="Stopping Programs" />
+<A name="toc2-112" title="Stopping Programs" />
 ## Stopping Programs
 
 During **gaggled** shutdown and in other scenarios, sometimes a program must be shut down.  This will work the same way **init** does it: use `SIGTERM`, if the process does not die within 10 seconds, `SIGKILL` will be sent.
 
-<A name="toc1-106" title="Usage" />
+<A name="toc1-117" title="Usage" />
 # Usage
 
 * `-c` $FILE will use a specific config file.  This argument is required.
 * `-t` will check dependency rules and existence of all programs but not start **gaggled**
 * `-h` to display help instead of running.
 
-<A name="toc1-113" title="Listener, Controller, and SMTP Gate" />
+<A name="toc1-124" title="Listener, Controller, and SMTP Gate" />
 # Listener, Controller, and SMTP Gate
 
 There are some utility programs included with **gaggled**.
 
-<A name="toc2-118" title="Listener" />
+<A name="toc2-129" title="Listener" />
 ## Listener
 
 The program **gaggled_listener** will connect to a gaggled instance that is configured with the `eventurl` option and display incoming program state changes messages as needed.  Use the -h option for help.
 
-<A name="toc2-123" title="Controller" />
+<A name="toc2-134" title="Controller" />
 ## Controller
 
 The program **gaggled_controller** will connect to a gaggled instance that is configured with the `controlurl` option and print program state, shut down programs, or start them up.  Use the `-h` option for help.
 
-<A name="toc2-128" title="SMTP Gate" />
+<A name="toc2-139" title="SMTP Gate" />
 ## SMTP Gate
 
 The program **gaggled_smtpgate** will connect to a gaggled instance that is configured with the `eventurl` and `controlurl` options and forward incoming program state changes messages via status emails to SMTP.  Other options are also required.  Use the `-h` option for help and required options.
 
 The SMTP gateway must be restarted for each gaggled restart, as sequence numbers start over and the set of programs can change, resulting in undefined behaviour.  Shut down the SMTP gateway before shutting down gaggled, and start gaggled before starting the SMTP gateway.  The easiest and most reliable way to do this is run the SMTP gateway from within the gaggled it is connecting to.
 
-<A name="toc1-135" title="Caveats" />
+<A name="toc1-146" title="Caveats" />
 # Caveats
 
 * There is, at present, **no security** on the control or event channels. If you use `eventurl` or `controlurl`, transport restrictions such as firewalls, permissions on unix sockets, binding to localhost are the the only restriction on status information and up/down commands being interchanged.
