@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <memory>
+#include <unistd.h>
 #include "gv.hpp"
 
 #include "gaggled_events_client.hpp"
@@ -11,7 +12,7 @@ class GaggledWatcher : public gaggled_events_client::gaggled_events<GaggledWatch
   GaggledWatcher(const char* url) :
     gaggled_events_client::gaggled_events<GaggledWatcher>(url)
   {
-    
+
   }
   void handle_statechange(gaggled_events_client::ProgramState& obj) {
     if (obj.up == 1) {
@@ -65,7 +66,7 @@ int main(int argc, char** argv) {
     usage();
     return 2;
   }
-  
+
   std::shared_ptr<GaggledWatcher> gw(new GaggledWatcher(url));
 
   while(1) {
