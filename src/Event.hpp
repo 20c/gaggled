@@ -37,6 +37,7 @@ class Event
 {
 public:
   Event(Gaggled* g, Dependency* d, Program* p, pid_t pid, int delay, int priority);
+  virtual ~Event();
   bool yet();
   void queue();
   virtual bool handle();

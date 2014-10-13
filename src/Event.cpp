@@ -41,6 +41,10 @@ gaggled::Event::Event(gaggled::Gaggled* g, gaggled::Dependency* d, gaggled::Prog
   this->queue();
 }
 
+gaggled::Event::~Event()
+{
+}
+
 void gaggled::Event::set_delay(int delay) {
   this->delay = delay;
   if (delay != 0) {

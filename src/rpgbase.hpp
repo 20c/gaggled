@@ -17,6 +17,8 @@ namespace rpgbase {
      // functions
       RPGService () {
       }
+      virtual ~RPGService () {
+      }
       virtual void run_once_bare () {
       }
      // members
