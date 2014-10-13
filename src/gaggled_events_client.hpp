@@ -272,7 +272,7 @@ namespace gaggled_events_client {
         }
         sock = new zmq::socket_t((*(ctx)), ZMQ_SUB);
         (sock)->connect(url);
-        (sock)->setsockopt(ZMQ_SUBSCRIBE, ((void*)("")), 0);
+        (sock)->setsockopt(ZMQ_SUBSCRIBE, "", 0);
         pollitem.socket = (*(sock));
         pollitem.events = ZMQ_POLLIN;
       }
