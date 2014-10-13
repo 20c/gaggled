@@ -302,9 +302,9 @@ int main(int argc, char** argv) {
         else
           std::cout << "    \"uptime\" : \"";
 
-        unsigned long long uptime_s = p->uptime_ms / 1000;
+        uint64_t uptime_s = p->uptime_ms / 1000;
         if (printnice) {
-          unsigned long long uptime_d, uptime_h, uptime_m;
+          uint64_t uptime_d, uptime_h, uptime_m;
 
           uptime_m = uptime_s / 60;
           uptime_s -= uptime_m * 60;

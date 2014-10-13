@@ -64,13 +64,13 @@ public:
 class KillEvent : public Event {
 public: 
   KillEvent(Gaggled* g, Program* p, int signal, bool prop, bool ignore_token);
-  KillEvent(Gaggled* g, Program* p, int signal, bool prop, unsigned long long token, int delay);
+  KillEvent(Gaggled* g, Program* p, int signal, bool prop, uint64_t token, int delay);
   virtual bool handle();
   virtual std::string to_string();
 private:
   int signal;
   bool prop;
-  unsigned long long token;
+  uint64_t token;
 };
 
 class DiedEvent : public Event {

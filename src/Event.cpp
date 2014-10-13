@@ -162,7 +162,7 @@ gaggled::KillEvent::KillEvent(gaggled::Gaggled* g, gaggled::Program* p, int sign
   }
 }
 
-gaggled::KillEvent::KillEvent(gaggled::Gaggled* g, gaggled::Program* p, int signal, bool prop, unsigned long long token, int delay) :
+gaggled::KillEvent::KillEvent(gaggled::Gaggled* g, gaggled::Program* p, int signal, bool prop, uint64_t token, int delay) :
   gaggled::Event(g, NULL, p, 0, delay, QPRI_KILL),
   signal(signal),
   prop(prop),

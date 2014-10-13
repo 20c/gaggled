@@ -48,11 +48,11 @@ public:
   std::string get_command();
   bool dependencies_satisfied();
   void start(Gaggled* g);
-  void kill_program(Gaggled* g, int signal, bool prop_start, unsigned long long token);
+  void kill_program(Gaggled* g, int signal, bool prop_start, uint64_t token);
   void died(Gaggled* g, std::string down_type, int rcode);
   uint64_t uptime();
   bool is_up(int ms);
-  unsigned long long get_token();
+  uint64_t get_token();
   void op_start(Gaggled* g);
   void op_kill(Gaggled* g);
   void op_shutdown(Gaggled* g);
@@ -61,7 +61,7 @@ public:
   std::vector<Dependency*> get_dependencies();
 private:
   //global statics
-  static unsigned long long instance_token;
+  static uint64_t instance_token;
   // run-length settings
   std::string name;
   std::string command;
@@ -82,7 +82,7 @@ private:
   bool prop_start;
   pid_t pid;
   timeval started;
-  unsigned long long token;
+  uint64_t token;
   uint64_t statechanges;
 };
 std::ostream &operator<< (std::ostream &stream, Program& p);

@@ -35,7 +35,7 @@
 #include "Dependency.hpp"
 
 #define PTOK_INVAL 1
-unsigned long long gaggled::Program::instance_token = PTOK_INVAL + 1;
+uint64_t gaggled::Program::instance_token = PTOK_INVAL + 1;
 
 gaggled::Program::Program(std::string name, std::string command, std::vector<std::string>* argv, std::map<std::string, std::string> own_env, std::string wd, bool respawn, bool enabled) :
   name(name),
@@ -291,7 +291,7 @@ void gaggled::Program::start(Gaggled* g) {
   }
 }
 
-void gaggled::Program::kill_program(Gaggled* g, int signal, bool prop_start, unsigned long long token) {
+void gaggled::Program::kill_program(Gaggled* g, int signal, bool prop_start, uint64_t token) {
   if (not this->running) {
     if (prop_start) {
       // if it's already dead, then the died process has already passed.
@@ -439,7 +439,7 @@ bool gaggled::Program::is_up(int ms) {
   return false;
 }
 
-unsigned long long gaggled::Program::get_token() {
+uint64_t gaggled::Program::get_token() {
   return this->token;
 }
 
